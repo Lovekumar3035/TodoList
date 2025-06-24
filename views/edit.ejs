@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gradient-to-br from-[#f2f6fa] to-[#e4eaf2] dark:from-gray-900 dark:to-gray-800 transition duration-300 ease-in-out min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-xl bg-white/90 dark:bg-gray-800/90 backdrop-blur shadow-2xl rounded-2xl p-8 form-box">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">✏️ Edit Task</h1>
+            <button id="themeToggle"
+                class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-1 rounded-lg shadow hover:opacity-90 transition">
+                🌗
+            </button>
+        </div>
+
+        <form action="/update/<%= user._id %>" method="POST" class="space-y-6">
+            <div>
+                <label for="username" class="block text-gray-700 dark:text-gray-200 font-medium">Name</label>
+                <input type="text" name="username" value="<%= user.username %>" required
+                    class="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            </div>
+
+            <div>
+                <label for="email" class="block text-gray-700 dark:text-gray-200 font-medium">Email</label>
+                <input type="email" name="email" value="<%= user.email %>" required
+                    class="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            </div>
+
+            <div>
+                <label for="task" class="block text-gray-700 dark:text-gray-200 font-medium">Task</label>
+                <input type="text" name="task" value="<%= user.task %>" required
+                    class="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            </div>
+
+            <div class="flex justify-between items-center">
+                <button type="submit"
+                    class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg shadow hover:scale-105 transition">
+                    ✅ Update Task
+                </button>
+                <a href="/"
+                    class="px-4 py-2 bg-gradient-to-r from-slate-600 to-gray-700 text-white rounded-lg shadow hover:scale-105 transition">
+                    🔙 Home
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        gsap.from(".form-box", {
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            ease: "power2.out"
+        });
+
+        const toggle = document.getElementById("themeToggle");
+        const root = document.documentElement;
+        if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+            root.classList.add("dark");
+        } else {
+            root.classList.remove("dark");
+        }
+
+        toggle.addEventListener("click", () => {
+            root.classList.toggle("dark");
+            localStorage.theme = root.classList.contains("dark") ? "dark" : "light";
+        });
+    </script>
+
+</body>
+
+</html>
